@@ -1,29 +1,29 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.55 (16-11-2008)
+Version: 0.56 (16-11-2008)
 Plugin URI: http://itex.name/
 Description: SAPE.RU helper.
 Author: Itex
 Author URI: http://itex.name/
 */
 
-/*  
-	Copyright 2007-2008  Itex (web : http://itex.name/)
-    
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+/*
+Copyright 2007-2008  Itex (web : http://itex.name/)
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /*
@@ -54,7 +54,7 @@ If you frequently add content, the content of the main links, tags, categories c
 For preventation of it switch on the option "Show context only on Pages and Posts".
 As required switch on Check - a verification code.
 For activating widget you shall go to a design-> widgets, activate the widget iSape and point its title.
-If define ('WPLANG', 'ru_RU'); in wp-config.php then russian language; 
+If define ('WPLANG', 'ru_RU'); in wp-config.php then russian language;
 
 RU
 Плагин iSape предназначен для продажи обычных и контекстных ссылок в Sape.ru
@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.55';
+	var $version = '0.56';
 	var $error = '';
 	var $force_show_code = true;
 	var $sape;
@@ -104,15 +104,15 @@ class itex_sape
 		add_action('wp_footer', array(&$this, 'itex_sape_footer'));
 		//add_action('template_redirect', array(&$this, 'itex_sape_safe_url'));
 		//add_action('plugins_loaded', array(&$this, 'itex_sape_init'));
-		
-		
+
+
 	}
-	
+
 	function lang_ru()
 	{
 		global $l10n;
 		$locale = get_locale();
-		if ($locale == 'ru_RU') 
+		if ($locale == 'ru_RU')
 		{
 			$domain = 'iSape';
 			if (isset($l10n[$domain])) return;
@@ -123,13 +123,13 @@ class itex_sape
 			$l10n[$domain] = new gettext_reader($inputReader);
 		}
 	}
-	
+
 	function itex_sape_init()
 	{
 
 		if (!defined('_SAPE_USER')) define('_SAPE_USER', get_option('itex_sape_sapeuser'));
 		else $this->error .= __('_SAPE_USER already defined<br/>', 'iSape');
-		
+
 		//FOR MASS INSTALL ONLY, REPLACE if (0) ON if (1)
 		if (0)
 		{
@@ -360,7 +360,7 @@ class itex_sape
 			{
 				update_option('itex_sapecontext_enable', intval($_POST['sapecontext_enable']));
 			}
-			
+
 			if (isset($_POST['sapecontext_pages_enable']) )
 			{
 				update_option('itex_sapecontext_pages_enable', intval($_POST['sapecontext_pages_enable']));
@@ -371,7 +371,24 @@ class itex_sape
 				update_option('itex_sape_check', intval($_POST['sape_check']));
 			}
 
-			echo "<div class='updated fade'><p><strong>iSape settings saved.</strong></p></div>";
+			if (isset($_POST['sape_widget']))
+			{
+				$s_w = wp_get_sidebars_widgets();
+				$ex = 0;
+				foreach ($s_w['sidebar-1'] as $k => $v)
+				{
+					if ($v == 'isape')
+					{
+						$ex = 1;
+						if (!$_POST['sape_widget']) unset($s_w['sidebar-1'][$k]);
+					}
+				}
+				if (!$ex && $_POST['sape_widget']) $s_w['sidebar-1'][] = 'isape';
+				wp_set_sidebars_widgets( $s_w );
+
+			}
+
+			echo "<div class='updated fade'><p><strong>".__('iSape settings saved.', 'iSape')."</strong></p></div>";
 		}
 		if (isset($_POST['sapedir_create']))
 		{
@@ -423,6 +440,7 @@ class itex_sape
 					</th>
 					<td>
 						<?php
+
 						echo "<input type='text' size='50' ";
 						echo "name='sapeuser' ";
 						echo "id='sapeuser' ";
@@ -588,6 +606,24 @@ class itex_sape
 						echo "</select>\n";
 
 						echo '<label for="">'._e('Footer links', 'iSape').'</label>';
+
+
+						echo "<br/>\n";
+
+						$ws = wp_get_sidebars_widgets();
+						echo "<select name='sape_widget' id='sape_widget'>\n";
+						echo "<option value='0'";
+						if(!in_array('isape',$ws['sidebar-1'])) echo" selected='selected'";
+						echo _e(">Disabled</option>\n", 'iSape');
+
+						echo "<option value='1'";
+						if (in_array('isape',$ws['sidebar-1'])) echo " selected='selected'";
+						echo ">".__('Active','iSape')."</option>\n";
+
+						echo "</select>\n";
+
+						echo '<label for="">'._e('Widget Active', 'iSape').'</label>';
+
 						?>
 					</td>
 					
@@ -672,7 +708,7 @@ class itex_sape
 		</form>
 		</div>
 		<?php
-		
+
 		//$this->po();
 
 	}
