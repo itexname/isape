@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.54 (31-10-2008)
+Version: 0.55 (16-11-2008)
 Plugin URI: http://itex.name/
 Description: SAPE.RU helper.
 Author: Itex
@@ -86,7 +86,8 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.54';
+	var $version = '0.55';
+	var $error = '';
 	var $force_show_code = true;
 	var $sape;
 	var $sapecontext;
@@ -126,11 +127,8 @@ class itex_sape
 	function itex_sape_init()
 	{
 
-
 		if (!defined('_SAPE_USER')) define('_SAPE_USER', get_option('itex_sape_sapeuser'));
-		else return 0;
-
-		
+		else $this->error .= __('_SAPE_USER already defined<br/>', 'iSape');
 		
 		//FOR MASS INSTALL ONLY, REPLACE if (0) ON if (1)
 		if (0)
@@ -311,7 +309,7 @@ class itex_sape
 		}
 		echo '
   			<p>
-    			<label for="itex_sape_widget">'._e('Widget Title: ').'</label>
+    			<label for="itex_sape_widget">'._e('Widget Title: ', 'iSape').'</label>
     			<textarea name="itex_sape_widget_title" id="itex_sape_widget" rows="1" cols="20">'.$title.'</textarea>
     			<input type="hidden" id="" name="itex_sape_widget_Submit" value="1" />
   			</p>';
@@ -404,7 +402,16 @@ class itex_sape
 				if (!get_option('itex_sape_sapeuser')) echo _e('Enter your SAPE UID in this box!', 'iSape');
 				?>
 		</div>
+		
 		<?php }
+		}
+		if (strlen($this->error))
+		{
+			echo '
+			<div style="margin:10px auto; border:3px #f00 solid; background-color:#fdd; color:#000; padding:10px; text-align:center;">
+				'.$this->error.'
+			</div>
+		';
 		}
 		?>		
 		
