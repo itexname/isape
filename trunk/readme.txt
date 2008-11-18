@@ -5,7 +5,7 @@ Author link: http://itex.name/
 Tags: automatic, link, links, seo
 Requires at least: 2.3
 Tested up to: 2.6.3
-Stable tag: 0.56
+Stable tag: 0.57
 
 == Description ==
 en

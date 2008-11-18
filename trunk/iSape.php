@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.56 (16-11-2008)
-Plugin URI: http://itex.name/
-Description: SAPE.RU helper.
+Version: 0.57 (18-11-2008)
+Plugin URI: http://itex.name/isape
+Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in http://www.sape.ru/r.a5a429f57e.php.
 Author: Itex
 Author URI: http://itex.name/
 */
@@ -92,7 +92,7 @@ class itex_sape
 	var $sape;
 	var $sapecontext;
 	//var $enable = false;
-	var $sidebar = '';
+	var $sidebar = '';  //if you want add yor links : var $sidebar = '<a href="http://itex.name">your links</a>';
 	var $footer = '';
 	var $beforecontent = '';
 	var $aftercontent = '';
@@ -167,20 +167,20 @@ class itex_sape
 
 			if (get_option('itex_sape_links_beforecontent') == '0')
 			{
-				$this->beforecontent = '';
+				//$this->beforecontent = '';
 			}
 			else
 			{
-				$this->beforecontent = '<div>'.$this->sape->return_links(intval(get_option('itex_sape_links_beforecontent'))).'</div>';
+				$this->beforecontent .= '<div>'.$this->sape->return_links(intval(get_option('itex_sape_links_beforecontent'))).'</div>';
 			}
 
 			if (get_option('itex_sape_links_aftercontent') == '0')
 			{
-				$this->aftercontent = '';
+				//$this->aftercontent = '';
 			}
 			else
 			{
-				$this->aftercontent = '<div>'.$this->sape->return_links(intval(get_option('itex_sape_links_aftercontent'))).'</div>';
+				$this->aftercontent .= '<div>'.$this->sape->return_links(intval(get_option('itex_sape_links_aftercontent'))).'</div>';
 			}
 
 			$countsidebar = get_option('itex_sape_links_sidebar');
@@ -191,28 +191,28 @@ class itex_sape
 			}
 			elseif ($countsidebar == '0')
 			{
-				$this->sidebar = '';
+				//$this->sidebar = '';
 			}
 			else
 			{
-				$this->sidebar = '<div>'.$this->sape->return_links(intval($countsidebar)).'</div>';
+				$this->sidebar .= '<div>'.$this->sape->return_links(intval($countsidebar)).'</div>';
 			}
 			$this->sidebar = $check.$this->sidebar;
 
 			$countfooter = get_option('itex_sape_links_footer');
 			$check = get_option('itex_sape_check')?'<!---check footer '.$countfooter.'-->':'';
-			$this->footer = $check;
+			$this->footer .= $check;
 			if ($countfooter == 'max')
 			{
 				//$this->footer = '<div>'.$this->sape->return_links().'</div>';
 			}
 			elseif ($countfooter == '0')
 			{
-				$this->footer = '';
+				//$this->footer = '';
 			}
 			else
 			{
-				$this->footer = '<div>'.$this->sape->return_links(intval($countfooter)).'</div>';
+				$this->footer .= '<div>'.$this->sape->return_links(intval($countfooter)).'</div>';
 			}
 			$this->footer = $check.$this->footer;
 
@@ -309,7 +309,7 @@ class itex_sape
 		}
 		echo '
   			<p>
-    			<label for="itex_sape_widget">'._e('Widget Title: ', 'iSape').'</label>
+    			<label for="itex_sape_widget">'.__('Widget Title: ', 'iSape').'</label>
     			<textarea name="itex_sape_widget_title" id="itex_sape_widget" rows="1" cols="20">'.$title.'</textarea>
     			<input type="hidden" id="" name="itex_sape_widget_Submit" value="1" />
   			</p>';
@@ -413,10 +413,10 @@ class itex_sape
 		<div style="margin:10px auto; border:3px #f00 solid; padding:10px; text-align:center;">
 				Create new sapedir and sape.php? (<?php echo $file;?>)
 				<p class="submit">
-				<input type='submit' name='sapedir_create' value='<?php echo _e('Create', 'iSape'); ?>' />
+				<input type='submit' name='sapedir_create' value='<?php echo __('Create', 'iSape'); ?>' />
 				</p>
 				<?php
-				if (!get_option('itex_sape_sapeuser')) echo _e('Enter your SAPE UID in this box!', 'iSape');
+				if (!get_option('itex_sape_sapeuser')) echo __('Enter your SAPE UID in this box!', 'iSape');
 				?>
 		</div>
 		
@@ -432,11 +432,11 @@ class itex_sape
 		}
 		?>		
 		
-			<h2><?php echo _e('iSape Options', 'iSape');?></h2>
+			<h2><?php echo __('iSape Options', 'iSape');?></h2>
 			<table class="form-table" cellspacing="2" cellpadding="5" width="100%">
 				<tr>
 					<th valign="top" style="padding-top: 10px;">
-						<label for=""><?php echo _e('Your SAPE UID:', 'iSape');?></label>
+						<label for=""><?php echo __('Your SAPE UID:', 'iSape');?></label>
 					</th>
 					<td>
 						<?php
@@ -446,12 +446,12 @@ class itex_sape
 						echo "id='sapeuser' ";
 						echo "value='".get_option('itex_sape_sapeuser')."' />\n";
 						?>
-						<p style="margin: 5px 10px;"><?php echo _e('Enter your SAPE UID in this box.', 'iSape');?></p>
+						<p style="margin: 5px 10px;"><?php echo __('Enter your SAPE UID in this box.', 'iSape');?></p>
 					</td>
 				</tr>
 				<tr>
 					<th width="30%" valign="top" style="padding-top: 10px;">
-						<label for=""><?php echo _e('Sape links:', 'iSape');?></label>
+						<label for=""><?php echo __('Sape links:', 'iSape');?></label>
 					</th>
 					<td>
 						<?php
@@ -459,14 +459,14 @@ class itex_sape
 						echo "<option value='1'";
 
 						if(get_option('itex_sape_enable')) echo " selected='selected'";
-						echo _e(">Enabled</option>\n", 'iSape');
+						echo __(">Enabled</option>\n", 'iSape');
 
 						echo "<option value='0'";
 						if(!get_option('itex_sape_enable')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 						echo "</select>\n";
 
-						echo '<label for="">'._e("Working", 'iSape').'</label>';
+						echo '<label for="">'.__("Working", 'iSape').'</label>';
 						echo "<br/>\n";
 
 
@@ -475,7 +475,7 @@ class itex_sape
 
 						echo "<option value='0'";
 						if(!get_option('itex_sape_links_beforecontent')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 
 						echo "<option value='1'";
 						if(get_option('itex_sape_links_beforecontent') == 1) echo " selected='selected'";
@@ -499,7 +499,7 @@ class itex_sape
 
 						echo "</select>\n";
 
-						echo '<label for="">'._e('Before content links', 'iSape').'</label>';
+						echo '<label for="">'.__('Before content links', 'iSape').'</label>';
 
 						echo "<br/>\n";
 
@@ -509,7 +509,7 @@ class itex_sape
 
 						echo "<option value='0'";
 						if(!get_option('itex_sape_links_aftercontent')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 
 						echo "<option value='1'";
 						if(get_option('itex_sape_links_aftercontent') == 1) echo " selected='selected'";
@@ -533,7 +533,7 @@ class itex_sape
 
 						echo "</select>\n";
 
-						echo '<label for="">'._e('After content links', 'iSape').'</label>';
+						echo '<label for="">'.__('After content links', 'iSape').'</label>';
 
 						echo "<br/>\n";
 
@@ -541,7 +541,7 @@ class itex_sape
 
 						echo "<option value='0'";
 						if(!get_option('itex_sape_links_sidebar')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 
 						echo "<option value='1'";
 						if(get_option('itex_sape_links_sidebar') == 1) echo " selected='selected'";
@@ -565,11 +565,11 @@ class itex_sape
 
 						echo "<option value='max'";
 						if(get_option('itex_sape_links_sidebar') == 'max') echo " selected='selected'";
-						echo ">"._e('Max', 'iSape')."</option>\n";
+						echo ">".__('Max', 'iSape')."</option>\n";
 
 						echo "</select>\n";
 
-						echo '<label for="">'._e('Sidebar links', 'iSape').'</label>';
+						echo '<label for="">'.__('Sidebar links', 'iSape').'</label>';
 
 						echo "<br/>\n";
 
@@ -577,7 +577,7 @@ class itex_sape
 						echo "<select name='sape_links_footer' id='sape_links_footer'>\n";
 						echo "<option value='0'";
 						if(!get_option('itex_sape_links_footer')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 
 						echo "<option value='1'";
 						if(get_option('itex_sape_links_footer') == 1) echo " selected='selected'";
@@ -601,11 +601,11 @@ class itex_sape
 
 						echo "<option value='max'";
 						if(get_option('itex_sape_links_footer') == 'max') echo " selected='selected'";
-						echo ">"._e('Max', 'iSape')."</option>\n";
+						echo ">".__('Max', 'iSape')."</option>\n";
 
 						echo "</select>\n";
 
-						echo '<label for="">'._e('Footer links', 'iSape').'</label>';
+						echo '<label for="">'.__('Footer links', 'iSape').'</label>';
 
 
 						echo "<br/>\n";
@@ -614,7 +614,7 @@ class itex_sape
 						echo "<select name='sape_widget' id='sape_widget'>\n";
 						echo "<option value='0'";
 						if(!in_array('isape',$ws['sidebar-1'])) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 
 						echo "<option value='1'";
 						if (in_array('isape',$ws['sidebar-1'])) echo " selected='selected'";
@@ -622,7 +622,7 @@ class itex_sape
 
 						echo "</select>\n";
 
-						echo '<label for="">'._e('Widget Active', 'iSape').'</label>';
+						echo '<label for="">'.__('Widget Active', 'iSape').'</label>';
 
 						?>
 					</td>
@@ -632,7 +632,7 @@ class itex_sape
 				
 				<tr>
 					<th width="30%" valign="top" style="padding-top: 10px;">
-						<label for=""><?php echo _e('Sape context:', 'iSape'); ?></label>
+						<label for=""><?php echo __('Sape context:', 'iSape'); ?></label>
 					</th>
 					<td>
 						<?php
@@ -640,14 +640,14 @@ class itex_sape
 						echo "<option value='1'";
 
 						if(get_option('itex_sapecontext_enable')) echo " selected='selected'";
-						echo _e(">Enabled</option>\n", 'iSape');
+						echo __(">Enabled</option>\n", 'iSape');
 
 						echo "<option value='0'";
 						if(!get_option('itex_sapecontext_enable')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 						echo "</select>\n";
 
-						echo '<label for="">'._e('Context', 'iSape').'</label>';
+						echo '<label for="">'.__('Context', 'iSape').'</label>';
 
 						echo "<br/>\n";
 
@@ -655,14 +655,14 @@ class itex_sape
 						echo "<option value='1'";
 
 						if(get_option('itex_sapecontext_pages_enable')) echo " selected='selected'";
-						echo _e(">Enabled</option>\n", 'iSape');
+						echo __(">Enabled</option>\n", 'iSape');
 
 						echo "<option value='0'";
 						if(!get_option('itex_sapecontext_pages_enable')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 						echo "</select>\n";
 
-						echo '<label for="">'._e('Show context only on Pages and Posts.', 'iSape').'</label>';
+						echo '<label for="">'.__('Show context only on Pages and Posts.', 'iSape').'</label>';
 
 						echo "<br/>\n";
 						?>
@@ -671,7 +671,7 @@ class itex_sape
 				
 				<tr>
 					<th width="30%" valign="top" style="padding-top: 10px;">
-						<label for=""><?php echo _e('Check:', 'iSape'); ?></label>
+						<label for=""><?php echo __('Check:', 'iSape'); ?></label>
 					</th>
 					<td>
 						<?php
@@ -679,11 +679,11 @@ class itex_sape
 						echo "<option value='1'";
 
 						if(get_option('itex_sape_check')) echo " selected='selected'";
-						echo _e(">Enabled</option>\n", 'iSape');
+						echo __(">Enabled</option>\n", 'iSape');
 
 						echo "<option value='0'";
 						if(!get_option('itex_sape_check')) echo" selected='selected'";
-						echo _e(">Disabled</option>\n", 'iSape');
+						echo __(">Disabled</option>\n", 'iSape');
 						echo "</select>\n";
 
 
@@ -695,14 +695,14 @@ class itex_sape
 						<label for=""></label>
 					</th>
 					<td align="center">
-						<?php echo _e("Powered by <a href='http://itex.name' title='iTex iSape'>iTex iSape</a> Version:",'iSape'); echo $this->version; ?>
+						<?php echo __("Powered by <a href='http://itex.name' title='iTex iSape'>iTex iSape</a> Version:",'iSape'); echo $this->version; ?>
 						<br/><br/>
 						<a target="_blank" href="http://www.sape.ru/r.a5a429f57e.php"><img src="http://www.sape.ru/images/banners/sape_001.gif" border="0" /></a>
 					</td>
 				</tr>
 			</table>
 			<p class="submit">
-				<input type='submit' name='info_update' value='<?php echo _e('Save Changes', 'iSape'); ?>' />
+				<input type='submit' name='info_update' value='<?php echo __('Save Changes', 'iSape'); ?>' />
 			</p>
 		
 		</form>
@@ -725,7 +725,7 @@ class itex_sape
 			echo '
 
 		<div style="margin:10px auto; border:3px #f00 solid; background-color:#fdd; color:#000; padding:10px; text-align:center;">
-				'._e('Can`t create Sape dir!', 'iSape').'
+				'.__('Can`t create Sape dir!', 'iSape').'
 		</div>';
 			return 0;
 		}
@@ -734,14 +734,14 @@ class itex_sape
 		{
 			echo '
 		<div style="margin:10px auto; border:3px #f00 solid; background-color:#fdd; color:#000; padding:10px; text-align:center;">
-				'._e('Can`t create sape.php!', 'iSape').'
+				'.__('Can`t create sape.php!', 'iSape').'
 		</div>';
 			return 0;
 		}
 		//chmod($file, 0777);
 		echo '
 		<div style="margin:10px auto; border:3px  #55ff00 solid; background-color:#afa; padding:10px; text-align:center;">
-				'._e('Sapedir and sape.php created!', 'iSape').'
+				'.__('Sapedir and sape.php created!', 'iSape').'
 		</div>';
 		//die();
 		return 1;
