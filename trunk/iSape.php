@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.57 (18-11-2008)
+Version: 0.58 (18-11-2008)
 Plugin URI: http://itex.name/isape
-Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in http://www.sape.ru/r.a5a429f57e.php.
+Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
 Author URI: http://itex.name/
 */
