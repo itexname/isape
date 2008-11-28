@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.58 (18-11-2008)
+Version: 0.60 (28-11-2008)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -86,9 +86,9 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.56';
+	var $version = '0.60';
 	var $error = '';
-	var $force_show_code = true;
+	//var $force_show_code = true;
 	var $sape;
 	var $sapecontext;
 	//var $enable = false;
@@ -151,7 +151,7 @@ class itex_sape
 			else return 0;
 		}
 		$o['charset'] = get_option('blog_charset')?get_option('blog_charset'):'UTF-8';
-		$o['force_show_code'] = $this->force_show_code;
+		//$o['force_show_code'] = $this->force_show_code;
 		if (get_option('itex_sape_check'))
 		{
 			$o['force_show_code'] = get_option('itex_sape_check');
