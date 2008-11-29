@@ -5,7 +5,7 @@ Author link: http://itex.name/
 Tags: automatic, link, links, seo
 Requires at least: 2.3
 Tested up to: 2.6.3
-Stable tag: 0.60
+Stable tag: 0.61
 
 == Description ==
 en
@@ -30,7 +30,7 @@ ru
 == Installation ==
 Requirements:
 Wordpress 2.3-2.6.3
-PHP5, maybe PHP4
+PHP5, PHP4
 Widget compatible theme, to use the links in widgets.
 
 en

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.60 (28-11-2008)
+Version: 0.61 (29-11-2008)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -39,7 +39,7 @@ Adjustment of amount of displayed links depending on the location.
 
 Requirements:
 Wordpress 2.3-2.6.3
-PHP5, maybe PHP4
+PHP5, PHP4
 Widget compatible theme, to use the links in widgets.
 
 Installation:
@@ -67,7 +67,7 @@ RU
 
 Требования:
 Wordpress 2.3-2.6.1
-ПХП5
+ПХП5, ПХП4
 Виджет совместимая тема, если использовать ссылки в ввиджетах.
 
 Установка:
@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.60';
+	var $version = '0.61';
 	var $error = '';
 	//var $force_show_code = true;
 	var $sape;
@@ -96,7 +96,9 @@ class itex_sape
 	var $footer = '';
 	var $beforecontent = '';
 	var $aftercontent = '';
-	function __construct()
+	
+	///function __construct()  in php4 not working
+	function itex_sape()
 	{
 		add_action('init', array(&$this, 'itex_sape_init'));
 		add_action("plugins_loaded", array(&$this, 'itex_sape_widget_init'));
@@ -613,11 +615,11 @@ class itex_sape
 						$ws = wp_get_sidebars_widgets();
 						echo "<select name='sape_widget' id='sape_widget'>\n";
 						echo "<option value='0'";
-						if(!in_array('isape',$ws['sidebar-1'])) echo" selected='selected'";
+						if (count($ws['sidebar-1'])) if(!in_array('isape',$ws['sidebar-1'])) echo" selected='selected'";
 						echo __(">Disabled</option>\n", 'iSape');
 
 						echo "<option value='1'";
-						if (in_array('isape',$ws['sidebar-1'])) echo " selected='selected'";
+						if (count($ws['sidebar-1'])) if (in_array('isape',$ws['sidebar-1'])) echo " selected='selected'";
 						echo ">".__('Active','iSape')."</option>\n";
 
 						echo "</select>\n";
@@ -730,6 +732,23 @@ class itex_sape
 			return 0;
 		}
 		chmod($dir, 0777);  //byli gluki s mkdir($dir, 0777)
+		
+		//php4 bug solution
+		if (!function_exists('file_put_contents')) 
+		{
+   			function file_put_contents($filename, $data) 
+   			{
+        		$f = @fopen($filename, 'w');
+        		if (!$f) return false;
+        		else 
+        		{
+            		$bytes = fwrite($f, $data);
+            		fclose($f);
+            		return $bytes;
+        		}
+    		}
+		}
+		
 		if (!file_put_contents($file,$sape_php_content))
 		{
 			echo '
