@@ -5,7 +5,7 @@ Author link: http://itex.name/
 Tags: automatic, link, links, seo, widget, sidebar, plugin
 Requires at least: 2.3
 Tested up to: 2.6.3
-Stable tag: 0.61
+Stable tag: 0.62
 
 == Description ==
 en

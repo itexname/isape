@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.61 (29-11-2008)
+Version: 0.62 (10-12-2008)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -377,7 +377,7 @@ class itex_sape
 			{
 				$s_w = wp_get_sidebars_widgets();
 				$ex = 0;
-				foreach ($s_w['sidebar-1'] as $k => $v)
+				if (count($ws['sidebar-1'])) foreach ($s_w['sidebar-1'] as $k => $v)
 				{
 					if ($v == 'isape')
 					{
