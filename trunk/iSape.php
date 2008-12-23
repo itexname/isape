@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.62 (10-12-2008)
+Version: 0.63 (23-12-2008)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.61';
+	var $version = '0.63';
 	var $error = '';
 	//var $force_show_code = true;
 	var $sape;
@@ -96,7 +96,7 @@ class itex_sape
 	var $footer = '';
 	var $beforecontent = '';
 	var $aftercontent = '';
-	
+	var $safeurl = '';
 	///function __construct()  in php4 not working
 	function itex_sape()
 	{
@@ -159,8 +159,14 @@ class itex_sape
 			$o['force_show_code'] = get_option('itex_sape_check');
 		}
 		$o['multi_site'] = true;
-
-		//$this->itex_sape_safe_url();
+		
+		if (get_option('itex_sape_masking'))
+		{
+			$this->itex_sape_safe_url();
+			$o['request_uri'] = $this->safeurl;
+	
+		}
+		
 		//$link = $this->itex_sape_safe_url();print_r($link);die();
 		if (get_option('itex_sape_enable'))
 		{
@@ -372,7 +378,11 @@ class itex_sape
 			{
 				update_option('itex_sape_check', intval($_POST['sape_check']));
 			}
-
+			
+			if (isset($_POST['sape_masking']))
+			{
+				update_option('itex_sape_masking', intval($_POST['sape_masking']));
+			}
 			if (isset($_POST['sape_widget']))
 			{
 				$s_w = wp_get_sidebars_widgets();
@@ -694,6 +704,28 @@ class itex_sape
 				</tr>
 				<tr>
 					<th width="30%" valign="top" style="padding-top: 10px;">
+						<label for=""><?php echo __('Masking of links', 'iSape'); ?>:</label>
+					</th>
+					<td>
+						<?php
+						echo "<select name='sape_masking' id='sape_masking'>\n";
+						echo "<option value='1'";
+
+						if(get_option('itex_sape_masking')) echo " selected='selected'";
+						echo __(">Enabled</option>\n", 'iSape');
+
+						echo "<option value='0'";
+						if(!get_option('itex_sape_masking')) echo" selected='selected'";
+						echo __(">Disabled</option>\n", 'iSape');
+						echo "</select>\n";
+
+						echo '<label for="">'.__('Masking of links', 'iSape').'.</label>';
+
+						?>
+					</td>
+				</tr>
+				<tr>
+					<th width="30%" valign="top" style="padding-top: 10px;">
 						<label for=""></label>
 					</th>
 					<td align="center">
@@ -702,6 +734,9 @@ class itex_sape
 						<a target="_blank" href="http://www.sape.ru/r.a5a429f57e.php"><img src="http://www.sape.ru/images/banners/sape_001.gif" border="0" /></a>
 					</td>
 				</tr>
+				
+				
+				
 			</table>
 			<p class="submit">
 				<input type='submit' name='info_update' value='<?php echo __('Save Changes', 'iSape'); ?>' />
@@ -768,6 +803,23 @@ class itex_sape
 
 	function itex_sape_safe_url()
 	{
+		$vars=array("p","p2");
+		$url=explode("?",strtolower($_SERVER['REQUEST_URI']));
+		if(isset($url[1]))
+		{
+			$count = preg_match_all("/(.*)=(.*)\&/Uis",$url[1]."&",$get);
+			for($i=0; $i < $count; $i++)
+				if (in_array($get[1][$i],$vars) && !empty($get[2][$i])) 
+					$ret[] = $get[1][$i]."=".$get[2][$i];
+			if (count($ret))
+			{
+				$ret = '?'.implode("&",$ret);
+		//print_r($ret);die();
+			}
+			else $ret = '';
+		}
+		else $ret = '';
+		$this->safeurl = $url[0].$ret;
 		return;
 	}
 
