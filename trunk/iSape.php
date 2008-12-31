@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.63 (23-12-2008)
+Version: 0.64 (31-12-2008 Happy New Year Edition)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -803,7 +803,7 @@ class itex_sape
 
 	function itex_sape_safe_url()
 	{
-		$vars=array("p","p2");
+		$vars=array("p","p2",'pg','page_id');
 		$url=explode("?",strtolower($_SERVER['REQUEST_URI']));
 		if(isset($url[1]))
 		{
