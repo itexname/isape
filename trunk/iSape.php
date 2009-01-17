@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.65 (14-01-2009)
+Version: 0.66 (17-01-2009)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.63';
+	var $version = '0.66';
 	var $error = '';
 	//var $force_show_code = true;
 	var $sape;
@@ -299,7 +299,9 @@ class itex_sape
 	{
 		extract($args, EXTR_SKIP);
 		$title = get_option("itex_sape_widget_title");
-		$title = empty($title) ? urlencode('<a href="http://itex.name" title="iSape">iSape</a>') :$title;
+		//$title = empty($title) ? urlencode('<a href="http://itex.name" title="iSape">iSape</a>') :$title;
+		$title = empty($title) ? ('<a href="http://itex.name/isape" title="iSape">iSape</a>') :$title;
+		
 		if (strlen($this->sidebar) >23) echo $before_widget.$before_title . $title . $after_title.
 		'<ul><li>'.$this->sidebar.'</li></ul>'.$after_widget;
 
@@ -308,7 +310,7 @@ class itex_sape
 	function itex_sape_widget_control()
 	{
 		$title = get_option("itex_sape_widget_title");
-		$title = empty($title) ? '<a href="http://itex.name" title="iSape">iSape</a>' :$title;
+		$title = empty($title) ? '<a href="http://itex.name/isape" title="iSape">iSape</a>' :$title;
 		if ($_POST['itex_sape_widget_Submit'])
 		{
 			//$title = htmlspecialchars($_POST['itex_sape_widget_title']);
@@ -805,7 +807,8 @@ class itex_sape
 
 	function itex_sape_safe_url()
 	{
-		$vars=array("p","p2",'pg','page_id');
+		$vars=array('p','p2','pg','page_id', 'm', 'cat', 'tag');
+		
 		$url=explode("?",strtolower($_SERVER['REQUEST_URI']));
 		if(isset($url[1]))
 		{
