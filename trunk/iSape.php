@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.68';
+	var $version = '0.69';
 	var $full = 0;
 	var $error = '';
 	//var $force_show_code = true;

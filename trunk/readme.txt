@@ -4,8 +4,8 @@ Donate link: http://itex.name/donation/
 Author link: http://itex.name/
 Tags: automatic, link, links, seo, widget, sidebar, plugin
 Requires at least: 2.3
-Tested up to: 2.7.1
-Stable tag: 0.68
+Tested up to: 2.8
+Stable tag: 0.69
 
 == Description ==
 en
