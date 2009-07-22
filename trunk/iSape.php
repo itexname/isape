@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.69 (03-07-2009)
+Version: 0.70 (22-07-2009)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -9,7 +9,7 @@ Author URI: http://itex.name/
 */
 
 /*
-Copyright 2007-2008  Itex (web : http://itex.name/)
+Copyright 2007-2009  Itex (web : http://itex.name/)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.69';
+	var $version = '0.70';
 	var $full = 0;
 	var $error = '';
 	//var $force_show_code = true;
@@ -281,7 +281,7 @@ class itex_sape
 				}
 				else
 				{
-					$this->beforecontent .= '<div>'.$this->itex_init_sape_get_links(intval(get_option('itex_sape_links_beforecontent'))).'</div>';
+					$this->beforecontent .= '<div>'.$this->itex_init_sape_get_links(intval(get_option('itex_s_sape_links_beforecontent'))).'</div>';
 				}
 					
 				if (get_option('itex_s_sape_links_aftercontent') == '0')
@@ -290,7 +290,7 @@ class itex_sape
 				}
 				else
 				{
-					$this->aftercontent .= '<div>'.$css.$this->itex_init_sape_get_links(intval(get_option('itex_sape_links_aftercontent'))).'</div>';
+					$this->aftercontent .= '<div>'.$css.$this->itex_init_sape_get_links(intval(get_option('itex_s_sape_links_aftercontent'))).'</div>';
 				}
 			}
 			$countsidebar = get_option('itex_s_sape_links_sidebar');
