@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.70 (22-07-2009)
+Version: 0.71 (10-01-2010)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -161,11 +161,14 @@ class itex_sape
 			///ru_RU lang .mo file
 			$input = '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';
 			$input = gzuncompress(base64_decode($input));
-			include_once(ABSPATH . WPINC . '/streams.php');
-			include_once(ABSPATH . WPINC . '/gettext.php');
-			$inputReader = new StringReader($input);
-			$l10n[$domain] = new gettext_reader($inputReader);
-			$this->itex_debug('Used Ru language');
+			if (file_exists(ABSPATH . WPINC . '/streams.php') && file_exists(ABSPATH . WPINC . '/gettext.php'))
+			{
+				include_once(ABSPATH . WPINC . '/streams.php');
+				include_once(ABSPATH . WPINC . '/gettext.php');
+				$inputReader = new StringReader($input);
+				$l10n[$domain] = new gettext_reader($inputReader);
+				$this->itex_debug('Used Ru language');
+			}
 		}
 	}
 	
