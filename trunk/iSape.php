@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: iSape
-Version: 0.71 (10-01-2010)
+Version: 0.72 (02-09-2010)
 Plugin URI: http://itex.name/isape
 Description: SAPE.RU helper. Plugin iSape is meant for the sale of conventional and contextual links in <a href="http://www.sape.ru/r.a5a429f57e.php">Sape.ru</a> .
 Author: Itex
@@ -86,7 +86,7 @@ Wordpress 2.3-2.6.1
 */
 class itex_sape
 {
-	var $version = '0.70';
+	var $version = '0.72';
 	var $full = 0;
 	var $error = '';
 	//var $force_show_code = true;
@@ -575,7 +575,7 @@ class itex_sape
 			?>		
 			
 			<h2><?php echo __('iSape Options', 'iSape');?></h2>
-			
+			<?php if ( '09_May' == date('d_F')) $this->itex_m_admin_9_may(); ?>
 			                       
        			<!-- Main -->
         		
@@ -1155,6 +1155,16 @@ class itex_sape
 		return 1;
 	}
 
+	/**
+   	* 9 may section admin menu
+   	*
+   	*/
+	function itex_m_admin_9_may()
+	{
+		if ( '09_May' == date('d_F'))
+		echo '<center><h1><a href="http://itex.name/plugins/s-dnem-pobedy.html">С Праздником Победы!</a></h1><p><object width="640" height="505"><param name="movie" value="http://www.youtube-nocookie.com/v/TQrINrPzgmw&hl=ru_RU&fs=1&rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube-nocookie.com/v/TQrINrPzgmw&hl=ru_RU&fs=1&rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="505"></embed></object></p></center>';
+		
+	}
 	/**
    	* Url masking
    	*
